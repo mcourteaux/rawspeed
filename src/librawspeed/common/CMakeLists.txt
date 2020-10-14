@@ -26,6 +26,7 @@ FILE(GLOB SOURCES
   "Spline.h"
   "TableLookUp.cpp"
   "TableLookUp.h"
+  "GetNumberOfProcessorCores.cpp"
 )
 
 target_sources(rawspeed PRIVATE
