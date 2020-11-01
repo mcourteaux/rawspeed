@@ -1,10 +1,10 @@
-rawspeed |travis-ci| |appveyor-ci| OBS_ |codecov| |oss-fuzz|
+rawspeed |github actions| |travis-ci| OBS_ |codecov| |oss-fuzz|
 
-.. |travis-ci| image:: https://travis-ci.org/darktable-org/rawspeed.svg?branch=develop
-    :target: https://travis-ci.org/darktable-org/rawspeed
+.. |github actions| image:: https://github.com/darktable-org/rawspeed/workflows/CI/badge.svg
+    :target: https://github.com/darktable-org/rawspeed/actions?query=workflow%3ACI
 
-.. |appveyor-ci| image:: https://ci.appveyor.com/api/projects/status/7pqy0gdr9mp16xu2/branch/develop?svg=true
-    :target: https://ci.appveyor.com/project/LebedevRI/rawspeed/branch/develop
+.. |travis-ci| image:: https://travis-ci.com/darktable-org/rawspeed.svg?branch=develop
+    :target: https://travis-ci.com/darktable-org/rawspeed
 
 .. _OBS: https://build.opensuse.org/project/monitor/graphics:darktable:master
 
