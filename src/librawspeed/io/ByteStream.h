@@ -165,6 +165,11 @@ public:
     return peek<uint8_t>(i);
   }
   uint8_t getByte() { return get<uint8_t>(); }
+  inline int16_t getI16() { return get<int16_t>(); }
+  inline uint16_t getU16() { return get<uint16_t>(); }
+  inline int32_t getI32() { return get<int32_t>(); }
+  inline uint32_t getU32() { return get<uint32_t>(); }
+  inline float getFloat() { return get<float>(); }
 
   [[nodiscard]] uint16_t peekU16() const { return peek<uint16_t>(); }
 
