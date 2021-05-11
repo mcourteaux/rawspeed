@@ -8,6 +8,8 @@ FILE(GLOB SOURCES
   "ArwDecoder.h"
   "Cr2Decoder.cpp"
   "Cr2Decoder.h"
+  "Cr3Decoder.cpp"
+  "Cr3Decoder.h"
   "CrwDecoder.cpp"
   "CrwDecoder.h"
   "DcrDecoder.cpp"
