@@ -12,6 +12,8 @@ FILE(GLOB SOURCES
   "CiffIFD.cpp"
   "CiffIFD.h"
   "CiffTag.h"
+  "IsoMBox.cpp"
+  "IsoMBox.h"
 )
 
 target_sources(rawspeed_tiff PRIVATE

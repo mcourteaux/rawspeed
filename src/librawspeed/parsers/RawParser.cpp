@@ -3,6 +3,7 @@
 
     Copyright (C) 2009-2014 Klaus Post
     Copyright (C) 2017 Axel Waggershauser
+    Copyright (C) 2018 Roman Lebedev
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -31,6 +32,8 @@
 #include "parsers/CiffParserException.h"
 #include "parsers/FiffParser.h"
 #include "parsers/FiffParserException.h"
+#include "parsers/IsoMParser.h"
+#include "parsers/IsoMParserException.h"
 #include "parsers/TiffParser.h"
 #include "parsers/TiffParserException.h"
 #include <memory>
@@ -80,6 +83,13 @@ std::unique_ptr<RawDecoder> RawParser::getDecoder(const CameraMetaData* meta) {
     return p.getDecoder(meta);
   } catch (const CiffParserException&) { // NOLINT(bugprone-empty-catch)
                                          // Yes, just ignore the exception.
+  }
+
+  // ISO Media
+  try {
+    IsoMParser p(mInput);
+    return p.getDecoder(meta);
+  } catch (IsoMParserException&) {
   }
 
   // Detect camera on filesize (CHDK).

@@ -1,7 +1,7 @@
 /*
     RawSpeed - RAW file decoder.
 
-    Copyright (C) 2017 Roman Lebedev
+    Copyright (C) 2017-2018 Roman Lebedev
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -33,9 +33,10 @@
 
 #include "io/Buffer.h"
 #include "io/IOException.h"
-#include "parsers/CiffParser.h" // IWYU pragma: keep
-#include "parsers/FiffParser.h" // IWYU pragma: keep
-#include "parsers/RawParser.h"  // IWYU pragma: keep
+#include "parsers/CiffParser.h"         // IWYU pragma: keep
+#include "parsers/FiffParser.h"         // IWYU pragma: keep
+#include "parsers/IsoMParser.h"         // IWYU pragma: keep
+#include "parsers/RawParser.h"          // IWYU pragma: keep
 #include "parsers/RawParserException.h"
 #include "parsers/TiffParser.h"
 #include <cassert>
