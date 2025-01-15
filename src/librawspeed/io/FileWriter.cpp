@@ -31,7 +31,7 @@
 #endif
 
 #include "io/FileIO.h"
-#include <Windows.h>
+#include <windows.h>
 #include <io.h>
 #include <tchar.h>
 #endif // !defined(__unix__) && !defined(__APPLE__)
