@@ -177,11 +177,6 @@ public:
     return peek<uint32_t>(i);
   }
 
-  uint16_t getU16() { return get<uint16_t>(); }
-  int32_t getI32() { return get<int32_t>(); }
-  uint32_t getU32() { return get<uint32_t>(); }
-  float getFloat() { return get<float>(); }
-
   [[nodiscard]] std::string_view peekString() const {
     Buffer tmp = peekBuffer(getRemainSize());
     const auto* termIter = std::find(tmp.begin(), tmp.end(), '\0');

@@ -589,10 +589,12 @@ bool Cr3Decoder::isCodecSupported(const std::string& compressorVersion) const {
 }
 
 void Cr3Decoder::checkSupportInternal(const CameraMetaData* meta) {
-  // Get Canon UUID box and parse
-  canonBox =
+  if (!canonBox) {
+    // Get Canon UUID box and parse
+    canonBox =
       std::make_unique<IsoMCanonBox>(rootBox->moov()->getBox(CanonBoxUuid));
-  canonBox->parse();
+    canonBox->parse();
+  }
 
   // Check compressor version string
   auto compressorVersion = canonBox->CNCV()->compressorVersion;
@@ -616,6 +618,9 @@ void Cr3Decoder::checkSupportInternal(const CameraMetaData* meta) {
 }
 
 void Cr3Decoder::decodeMetaDataInternal(const CameraMetaData* meta) {
+  if (!canonBox) {
+    checkSupportInternal(meta);
+  }
   const auto camId = canonBox->CMT1()->mRootIFD0->getID();
 
   uint32_t iso = 0;
@@ -647,9 +652,9 @@ void Cr3Decoder::decodeMetaDataInternal(const CameraMetaData* meta) {
 
   // CTMD MDAT
   assert(!track3Mdia->minf->stbl->chunks.empty());
-  auto ctmd_chunk = track3Mdia->minf->stbl->chunks[0];
+  const auto *ctmd_chunk = track3Mdia->minf->stbl->chunks[0];
 
-  Buffer ctmd_chunk_buf = ctmd_chunk->getSubView(0);
+  //Buffer ctmd_chunk_buf = ctmd_chunk->getSubView(0);
 
   auto ctmd_recs = CanonTimedMetadata(ctmd_chunk);
 
@@ -684,7 +689,7 @@ void Cr3Decoder::decodeMetaDataInternal(const CameraMetaData* meta) {
   }
 
   // No CR3 camera has swapped_wb so far, but who knows...
-  if (hints.has("swapped_wb")) {
+  if (hints.contains("swapped_wb")) {
     mRaw->metadata.wbCoeffs[0] = wb_coeffs[2];
     mRaw->metadata.wbCoeffs[1] = wb_coeffs[0];
     mRaw->metadata.wbCoeffs[2] = wb_coeffs[1];

@@ -89,7 +89,7 @@ std::unique_ptr<RawDecoder> RawParser::getDecoder(const CameraMetaData* meta) {
   try {
     IsoMParser p(mInput);
     return p.getDecoder(meta);
-  } catch (IsoMParserException&) {
+  } catch (const IsoMParserException&) { //NOLINT(bugprone-empty-catch)
   }
 
   // Detect camera on filesize (CHDK).

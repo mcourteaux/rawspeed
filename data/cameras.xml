@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <?xml-stylesheet type="text/xsl" href="showcameras.xsl" ?>
 <!--
-	License: CC-BY-SA 3.0
+License: CC-BY-SA 3.0
 
-	This work is licensed under a
-	Creative Commons Attribution-ShareAlike 3.0 Unported License.
+This work is licensed under a
+Creative Commons Attribution-ShareAlike 3.0 Unported License.
 
-	See more at:
-	http://creativecommons.org/licenses/by-sa/3.0/
+See more at:
+http://creativecommons.org/licenses/by-sa/3.0/
 -->
 
 <!DOCTYPE Cameras [
@@ -147,11 +147,6 @@
 	</Camera>
 	<Camera make="Canon" model="Canon EOS 250D">
 		<ID make="Canon" model="EOS 250D">Canon EOS 250D</ID>
-		<Aliases>
-			<Alias id="EOS 200D Mark II">Canon EOS 200D II</Alias>
-			<Alias id="EOS Kiss X10">Canon EOS Kiss X10</Alias>
-			<Alias id="EOS Rebel SL3">Canon EOS Rebel SL3</Alias>
-		</Aliases>
 		<CFA width="2" height="2">
 			<Color x="0" y="0">RED</Color>
 			<Color x="1" y="0">GREEN</Color>
@@ -161,6 +156,11 @@
 		<Sensor black="2049" white="14338"/>
 		<Sensor black="511" white="11606" iso_list="100"/>
 		<Sensor black="511" white="14338" iso_list="200"/>
+		<Aliases>
+			<Alias id="EOS 200D Mark II">Canon EOS 200D II</Alias>
+			<Alias id="EOS Kiss X10">Canon EOS Kiss X10</Alias>
+			<Alias id="EOS Rebel SL3">Canon EOS Rebel SL3</Alias>
+		</Aliases>
 		<Hints>
 			<Hint name="wb_offset" value="71"/>
 		</Hints>
@@ -556,12 +556,12 @@
 	</Camera>
 	<Camera make="Canon" model="Canon EOS 80D">
 		<ID make="Canon" model="EOS 80D">Canon EOS 80D</ID>
-			<CFA width="2" height="2">
-				<Color x="0" y="0">RED</Color>
-				<Color x="1" y="0">GREEN</Color>
-				<Color x="0" y="1">GREEN</Color>
-				<Color x="1" y="1">BLUE</Color>
-			</CFA>
+		<CFA width="2" height="2">
+			<Color x="0" y="0">RED</Color>
+			<Color x="1" y="0">GREEN</Color>
+			<Color x="0" y="1">GREEN</Color>
+			<Color x="1" y="1">BLUE</Color>
+		</CFA>
 		<Crop x="266" y="42" width="-8" height="-4"/>
 		<BlackAreas>
 			<Vertical x="0" width="263"/>
@@ -1661,18 +1661,6 @@
 			</ColorMatrix>
 		</ColorMatrices>
 	</Camera>
-	<Camera make="Canon" model="Canon EOS M50" supported="no">
-		<ID make="Canon" model="EOS M50">Canon EOS M50</ID>
-		<Aliases>
-			<Alias id="EOS Kiss M">Canon EOS KISS M</Alias>
-		</Aliases>
-	</Camera>
-	<Camera make="Canon" model="Canon EOS M50m2" supported="no">
-		<ID make="Canon" model="EOS M50 Mark II">Canon EOS M50 Mark II</ID>
-		<Aliases>
-			<Alias id="EOS Kiss M2">Canon EOS KISS M2</Alias>
-		</Aliases>
-	</Camera>
 	<Camera make="Canon" model="Canon EOS M100">
 		<ID make="Canon" model="EOS M100">Canon EOS M100</ID>
 		<CFA width="2" height="2">
@@ -1694,18 +1682,8 @@
 			</ColorMatrix>
 		</ColorMatrices>
 	</Camera>
-<<<<<<< HEAD
-	<Camera make="Canon" model="Canon EOS M200" supported="no">
-		<ID make="Canon" model="EOS M200">Canon EOS M200</ID>
-	</Camera>
-	<Camera make="Canon" model="Canon EOS R" supported="no">
-		<ID make="Canon" model="EOS R">Canon EOS R</ID>
-	</Camera>
 	<Camera make="Canon" model="Canon EOS Ra" supported="no">
 		<ID make="Canon" model="EOS Ra">Canon EOS Ra</ID>
-	</Camera>
-	<Camera make="Canon" model="Canon EOS RP" supported="no">
-		<ID make="Canon" model="EOS RP">Canon EOS RP</ID>
 	</Camera>
 	<Camera make="Canon" model="Canon EOS R1" supported="unknown-no-samples">
 		<ID make="Canon" model="EOS R1">Canon EOS R1</ID>
@@ -1713,17 +1691,11 @@
 	<Camera make="Canon" model="Canon EOS R3" supported="no">
 		<ID make="Canon" model="EOS R3">Canon EOS R3</ID>
 	</Camera>
-	<Camera make="Canon" model="Canon EOS R5" supported="no">
-		<ID make="Canon" model="EOS R5">Canon EOS R5</ID>
-	</Camera>
 	<Camera make="Canon" model="Canon EOS R5m2" supported="unknown-no-samples">
 		<ID make="Canon" model="EOS R5 Mark II">Canon EOS R5 Mark II</ID>
 	</Camera>
 	<Camera make="Canon" model="Canon EOS R5 C" supported="no">
 		<ID make="Canon" model="EOS R5 C">Canon EOS R5 C</ID>
-	</Camera>
-	<Camera make="Canon" model="Canon EOS R6" supported="no">
-		<ID make="Canon" model="EOS R6">Canon EOS R6</ID>
 	</Camera>
 	<Camera make="Canon" model="Canon EOS R6m2" supported="no">
 		<ID make="Canon" model="EOS R6 Mark II">Canon EOS R6 Mark II</ID>
@@ -2293,6 +2265,9 @@
 		<Sensor black="512" white="10439" iso_list="160"/>
 		<Sensor black="511" white="14338" iso_list="200 250"/>
 		<Sensor black="2049" white="10439" iso_list="320 640 1250 2500 5000"/>
+		<Aliases>
+			<Alias id="EOS Kiss M2">Canon EOS KISS M2</Alias>
+		</Aliases>
 		<Hints>
 			<Hint name="wb_offset" value="71"/>
 		</Hints>

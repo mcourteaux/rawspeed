@@ -26,8 +26,8 @@
 */
 
 #include "decompressors/CrxDecompressor.h" // For CrxDecompressor
-#include "common/Array2DRef.h"             // for Array2DRef
-#include "common/Point.h"                  // for iPoint2D, iPoint2D::area_type
+#include "adt/Array2DRef.h"                // for Array2DRef
+#include "adt/Point.h"                     // for iPoint2D, iPoint2D::area_type
 #include "common/RawImage.h"               // for RawImage, RawImageData
 #include "decoders/Cr3Decoder.h"           // for Cr3Decoder
 #include "decoders/RawDecoderException.h"  // for ThrowRDE
@@ -217,9 +217,9 @@ static inline void crxFillBuffer(CrxBitstream* bitStrm) {
     auto bytesToRead = std::min(bitStrm->mdatSize, CRX_BUF_SIZE);
 
     if (sub.getSize() >= bytesToRead) {
-      auto data = sub.getData(0, bytesToRead);
+      auto data = sub.getSubView(0, bytesToRead);
       assert(!bitStrm->mdatBuf.empty());
-      ::memcpy(bitStrm->mdatBuf.data(), data, bytesToRead);
+      ::memcpy(bitStrm->mdatBuf.data(), data.begin(), bytesToRead);
       bitStrm->curBufSize = bytesToRead;
     }
 
@@ -2180,7 +2180,7 @@ static int crxReadImageHeaders(const IsoMCanonCmp1Box* hdr, CrxImage* img) {
   uint32_t tileOffset = 0;
   Buffer mdatHdr = img->crxRawData.getSubView(0, img->mdatHdrSize);
   int32_t dataSize = mdatHdr.getSize();
-  const uint8_t* dataPtr = mdatHdr.getData(0, dataSize);
+  const uint8_t* dataPtr = mdatHdr.getSubView(0, dataSize).begin();
   CrxTile* tile = img->tiles;
 
   for (int curTile = 0; curTile < nTiles; ++curTile, ++tile) {
@@ -2474,10 +2474,11 @@ void CrxDecompressor::decode(const IsoMCanonCmp1Box& cmp1Box,
     hdr.tileHeight >>= 1;
   }
 
-  auto storage = rawspeed::Buffer::Create(bufLen);
-  const rawspeed::Buffer outBuf(storage.get(), bufLen);
+  std::vector<uint8_t> storage;
+  storage.resize(bufLen);
+  const rawspeed::Buffer outBuf(storage.data(), bufLen);
 
-  if (crxSetupImageData(&hdr, &img, reinterpret_cast<int16_t*>(storage.get()))) {
+  if (crxSetupImageData(&hdr, &img, reinterpret_cast<int16_t*>(storage.data()))) {
     ThrowRDE("Crx image setup failed");
   }
   crxLoadDecodeLoop(&img, hdr.nPlanes);
@@ -2488,11 +2489,11 @@ void CrxDecompressor::decode(const IsoMCanonCmp1Box& cmp1Box,
   crxFreeImageData(&img);
 
   ByteStream input(DataBuffer(outBuf, Endianness::big));
-  UncompressedDecompressor u(input, mRaw);
+  UncompressedDecompressor u(input, mRaw,
+      iRectangle2D({0, 0}, iPoint2D(cmp1Box.f_width, cmp1Box.f_height)),
+      2 * cmp1Box.f_width, 16, BitOrder::LSB);
 
-  // align output bytes
-  u.decodeRawUnpacked<16, Endianness::little>(cmp1Box.f_width,
-                                              cmp1Box.f_height);
+  u.readUncompressedRaw();
 }
 
 CrxDecompressor::CrxDecompressor(const RawImage& img)
