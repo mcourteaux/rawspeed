@@ -1,7 +1,7 @@
 /*
     RawSpeed - RAW file decoder.
 
-    Copyright (C) 2018 Roman Lebedev
+    Copyright (C) 2023 Roman Lebedev
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -18,24 +18,13 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
-#pragma once
-
-#include "common/RawspeedException.h"   // for ThrowExceptionHelper
-#include "parsers/RawParserException.h" // for ThrowRPE, RawParserException
-#include <string>
+#include "parsers/IsoMParserException.h"
 
 namespace rawspeed {
 
-class IsoMParserException final : public RawParserException {
-  void anchor() const override;
-
-public:
-  explicit IsoMParserException(const std::string& msg)
-      : RawParserException(msg.c_str()) {}
-  explicit IsoMParserException(const char* msg) : RawParserException(msg) {}
-};
-
-#define ThrowIPE(...)                                                          \
-  ThrowExceptionHelper(rawspeed::IsoMParserException, __VA_ARGS__)
+void IsoMParserException::anchor() const {
+  // Empty out-of-line definition for the purpose of anchoring
+  // the class's vtable to this Translational Unit.
+}
 
 } // namespace rawspeed

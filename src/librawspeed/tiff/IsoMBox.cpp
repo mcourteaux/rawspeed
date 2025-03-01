@@ -32,26 +32,6 @@
 namespace rawspeed {
 
 
-// The ODR-definitions
-
-const FourCharStr IsoMBoxTypes::ftyp;
-const FourCharStr IsoMBoxTypes::co64;
-const FourCharStr IsoMBoxTypes::stsz;
-const FourCharStr IsoMBoxTypes::stsc;
-const FourCharStr IsoMBoxTypes::stsd;
-const FourCharStr IsoMBoxTypes::stbl;
-const FourCharStr IsoMBoxTypes::url;
-const FourCharStr IsoMBoxTypes::dref;
-const FourCharStr IsoMBoxTypes::dinf;
-const FourCharStr IsoMBoxTypes::minf;
-const FourCharStr IsoMBoxTypes::mdia;
-const FourCharStr IsoMBoxTypes::trak;
-const FourCharStr IsoMBoxTypes::moov;
-const FourCharStr IsoMBoxTypes::mdat;
-
-const FourCharStr IsoMBoxTypes::uuid;
-
-
 // Base-level lexing/parsing.
 
 AbstractIsoMBox::AbstractIsoMBox(ByteStream* bs) {
@@ -124,11 +104,12 @@ IsoMContainer::getBox(const AbstractIsoMBox::UuidType& uuid) const {
   ThrowIPE("Requested box UUID not found");
 }
 
+void IsoMContainer::anchor() const {}
+
 
 
 // FileType box parsing.
 
-const std::array<const FourCharStr, 1> IsoMFileTypeBox::supportedBrands;
 IsoMFileTypeBox::operator bool() const {
   if (std::find(supportedBrands.begin(), supportedBrands.end(), majorBrand) ==
       supportedBrands.end())
@@ -193,7 +174,7 @@ IsoMSampleDescriptionBox::IsoMSampleDescriptionBox(const AbstractIsoMBox& base)
   operator bool();
 }
 
-
+void IsoMSampleDescriptionBox::anchor() const {}
 
 IsoMSampleToChunkBox::operator bool() const {
   if (dscs.size() != 1)
@@ -232,6 +213,8 @@ IsoMSampleToChunkBox::IsoMSampleToChunkBox(const AbstractIsoMBox& base)
   operator bool();
 }
 
+void IsoMSampleToChunkBox::anchor() const {}
+
 // SampleSize box parsing.
 
 IsoMSampleSizeBox::operator bool() const {
@@ -262,6 +245,8 @@ IsoMSampleSizeBox::IsoMSampleSizeBox(const AbstractIsoMBox& base)
   // Validate.
   operator bool();
 }
+
+void IsoMSampleSizeBox::anchor() const {}
 
 // ChunkLargeOffset box parsing.
 
@@ -303,6 +288,8 @@ IsoMChunkLargeOffsetBox::IsoMChunkLargeOffsetBox(const AbstractIsoMBox& base)
   // Validate.
   operator bool();
 }
+
+void IsoMChunkLargeOffsetBox::anchor() const {}
 
 // Sample Table box handling.
 
@@ -357,7 +344,7 @@ IsoMSampleTableBox::operator bool() const {
 
 IsoMDataReferenceBox::IsoMDataEntryUrlBox::operator bool() const {
   if (flags != static_cast<decltype(flags)>(Flags::SelfContained))
-    ThrowIPE("Unexpected flags: %u; entry is not self-contained", flags);
+    ThrowIPE("Unexpected flags: %u; entry is not self-contained", static_cast<unsigned>(flags));
 
   return true; // Supported!
 }
@@ -368,6 +355,9 @@ IsoMDataReferenceBox::IsoMDataEntryUrlBox::IsoMDataEntryUrlBox(
   // Validate.
   operator bool();
 }
+
+void IsoMDataReferenceBox::anchor() const {}
+void IsoMDataReferenceBox::IsoMDataEntryUrlBox::anchor() const {}
 
 IsoMDataReferenceBox::operator bool() const {
   if (entries.size() != 1)

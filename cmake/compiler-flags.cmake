@@ -146,7 +146,7 @@ MARK_AS_ADVANCED(
     CMAKE_CXX_FLAGS_SANITIZE
     CMAKE_C_FLAGS_SANITIZE )
 
-set(fuzz "-O3 -ffast-math")
+set(fuzz "-O3")
 
 if(NOT LIB_FUZZING_ENGINE)
   set(fuzz "${fuzz} ${asan} ${ubsan}")

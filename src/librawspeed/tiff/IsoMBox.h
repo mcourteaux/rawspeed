@@ -131,8 +131,10 @@ public:
 
   IsoMContainer() = default;
   virtual ~IsoMContainer() = default;
+  IsoMContainer(const IsoMContainer &) = default;
 
   explicit IsoMContainer(ByteStream* bs);
+
 
   const AbstractIsoMBox& getBox(const AbstractIsoMBox::UuidType& uuid) const;
 
@@ -142,6 +144,9 @@ public:
       parseBox(box);
     operator bool();
   }
+
+private:
+  virtual void anchor() const;
 };
 
 // No further boxes shall be constructible from ByteStream!
@@ -175,6 +180,8 @@ struct IsoMFullBox : public IsoMBox<type> {
 
   IsoMFullBox() = default;
   virtual ~IsoMFullBox() = default;
+
+  IsoMFullBox(const IsoMFullBox<type> &) = default;
 
   explicit IsoMFullBox(const AbstractIsoMBox& base) : IsoMBox<type>(base) {
     // Highest 8 bits - version
@@ -248,6 +255,9 @@ struct IsoMSampleDescriptionBox final : public IsoMFullBox<IsoMBoxTypes::stsd> {
 
   // Validate.
   explicit operator bool() const;
+
+private:
+  virtual void anchor() const;
 };
 
 struct IsoMSampleToChunkBox final : public IsoMFullBox<IsoMBoxTypes::stsc> {
@@ -263,6 +273,9 @@ struct IsoMSampleToChunkBox final : public IsoMFullBox<IsoMBoxTypes::stsc> {
 
   // Validate.
   explicit operator bool() const;
+
+private:
+  virtual void anchor() const;
 };
 
 struct IsoMSampleSizeBox final : public IsoMFullBox<IsoMBoxTypes::stsz> {
@@ -272,6 +285,9 @@ struct IsoMSampleSizeBox final : public IsoMFullBox<IsoMBoxTypes::stsz> {
 
   // Validate.
   explicit operator bool() const;
+
+private:
+  virtual void anchor() const;
 };
 
 struct IsoMChunkLargeOffsetBox final : public IsoMFullBox<IsoMBoxTypes::co64> {
@@ -281,6 +297,9 @@ struct IsoMChunkLargeOffsetBox final : public IsoMFullBox<IsoMBoxTypes::co64> {
 
   // Validate.
   explicit operator bool() const;
+
+private:
+  virtual void anchor() const;
 };
 
 class IsoMSampleTableBox final : public IsoMContainerBox<IsoMBoxTypes::stbl> {
@@ -310,6 +329,9 @@ struct IsoMDataReferenceBox final : public IsoMFullBox<IsoMBoxTypes::dref> {
 
     // Validate.
     explicit operator bool() const;
+
+  private:
+    virtual void anchor() const;
   };
 
   std::vector<IsoMDataEntryUrlBox> entries;
@@ -318,6 +340,9 @@ struct IsoMDataReferenceBox final : public IsoMFullBox<IsoMBoxTypes::dref> {
 
   // Validate.
   explicit operator bool() const;
+
+private:
+  virtual void anchor() const;
 };
 
 class IsoMDataInformationBox final

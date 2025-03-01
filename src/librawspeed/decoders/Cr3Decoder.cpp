@@ -31,20 +31,6 @@
 
 namespace rawspeed {
 
-const FourCharStr IsoMBoxCanonTypes::CNCV;
-const FourCharStr IsoMBoxCanonTypes::CCTP;
-const FourCharStr IsoMBoxCanonTypes::CTBO;
-const FourCharStr IsoMBoxCanonTypes::CMT1;
-const FourCharStr IsoMBoxCanonTypes::CMT2;
-const FourCharStr IsoMBoxCanonTypes::CMT3;
-const FourCharStr IsoMBoxCanonTypes::CMT4;
-const FourCharStr IsoMBoxCanonTypes::THMB;
-const FourCharStr IsoMBoxCanonTypes::CRAW;
-const FourCharStr IsoMBoxCanonTypes::CMP1;
-const FourCharStr IsoMBoxCanonTypes::CDI1;
-const FourCharStr IsoMBoxCanonTypes::IAD1;
-const FourCharStr IsoMBoxCanonTypes::CTMD;
-
 const AbstractIsoMBox::UuidType CanonBoxUuid = {
     0x85, 0xc0, 0xb6, 0x87, 0x82, 0x0f, 0x11, 0xe0,
     0x81, 0x11, 0xf4, 0xce, 0x46, 0x2b, 0x6a, 0x48};
@@ -460,6 +446,8 @@ IsoMCanonIad1Box::operator bool() const {
   return true; // OK!
 }
 
+void IsoMCanonIad1Box::anchor() const {}
+
 iRectangle2D IsoMCanonIad1Box::sensorRect() const {
   return iRectangle2D(0, 0, sensorWidth, sensorHeight);
 }
@@ -676,13 +664,16 @@ void Cr3Decoder::decodeMetaDataInternal(const CameraMetaData* meta) {
     // https://github.com/exiftool/exiftool/blob/ceff3cbc4564e93518f3d2a2e00d8ae203ff54af/lib/Image/ExifTool/Canon.pm#L1910
     int offset = hints.get("wb_offset", 126);
 
-    wb_coeffs[0] = static_cast<float>(wb->getU16(offset + 0)) / 1024.0;
-    wb_coeffs[1] = static_cast<float>(wb->getU16(offset + 1)) / 1024.0;
+    wb_coeffs[0] = static_cast<float>(wb->getU16(offset + 0)) / 1024.0F;
+    wb_coeffs[1] = static_cast<float>(wb->getU16(offset + 1)) / 1024.0F;
     wb_coeffs[2] = 0; // GG
-    wb_coeffs[3] = static_cast<float>(wb->getU16(offset + 3)) / 1024.0;
+    wb_coeffs[3] = static_cast<float>(wb->getU16(offset + 3)) / 1024.0F;
 
     writeLog(DEBUG_PRIO::EXTRA, "wb_coeffs:, 0: %f, 1: %f, 2: %f, 3: %f\n",
-             wb_coeffs[0], wb_coeffs[1], wb_coeffs[2], wb_coeffs[3]);
+             static_cast<double>(wb_coeffs[0]),
+             static_cast<double>(wb_coeffs[1]),
+             static_cast<double>(wb_coeffs[2]),
+             static_cast<double>(wb_coeffs[3]));
 
   } else {
     writeLog(DEBUG_PRIO::EXTRA, "no wb_coeffs found");

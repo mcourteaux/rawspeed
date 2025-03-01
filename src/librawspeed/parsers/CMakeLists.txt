@@ -13,6 +13,7 @@ FILE(GLOB SOURCES
   "IsoMParser.cpp"
   "IsoMParser.h"
   "IsoMParserException.h"
+  "IsoMParserException.cpp"
   "RawParser.cpp"
   "RawParser.h"
   "RawParserException.cpp"

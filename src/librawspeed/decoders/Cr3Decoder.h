@@ -189,6 +189,7 @@ public:
 class IsoMCanonIad1Box final : public IsoMFullBox<IsoMBoxCanonTypes::IAD1> {
   //void parseBox(const AbstractIsoMBox& box) override;
   explicit operator bool() const;
+  virtual void anchor() const;
 
 public:
   // IAD1 data is not required to decode the image.
