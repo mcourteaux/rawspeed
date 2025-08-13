@@ -23,6 +23,7 @@
 #pragma once
 
 #include "rawspeedconfig.h"
+#include "SymbolDef.h"
 #include "adt/NORangesSet.h"
 #include "io/ByteStream.h"
 #include "tiff/CiffTag.h"
@@ -51,7 +52,7 @@ enum class CiffDataType : uint16_t {
 
 };
 
-class CiffEntry final {
+class RAWSPEED_API CiffEntry final {
   friend class CiffIFD;
 
   ByteStream data;

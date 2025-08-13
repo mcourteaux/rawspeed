@@ -22,6 +22,7 @@
 #pragma once
 
 #include "adt/Point.h"
+#include "SymbolDef.h"
 #include "bitstreams/BitStreams.h"
 #include "common/RawImage.h"
 #include "io/Buffer.h"
@@ -34,7 +35,7 @@ namespace rawspeed {
 class CameraMetaData;
 class TiffIFD;
 
-class RawDecoder {
+class RAWSPEED_API RawDecoder {
 public:
   /* Construct decoder instance - Buffer is a filemap of the file to be decoded
    */

@@ -23,6 +23,7 @@
 #pragma once
 
 #include "rawspeedconfig.h"
+#include "SymbolDef.h"
 #include "adt/NORangesSet.h"
 #include "io/Buffer.h"
 #include "io/ByteStream.h"
@@ -46,7 +47,7 @@ using TiffIFDOwner = std::unique_ptr<TiffIFD>;
 using TiffRootIFDOwner = std::unique_ptr<TiffRootIFD>;
 using TiffEntryOwner = std::unique_ptr<TiffEntry>;
 
-class TiffIFD {
+class RAWSPEED_API TiffIFD {
   uint32_t nextIFD = 0;
 
   TiffIFD* const parent;
@@ -135,7 +136,7 @@ struct TiffID final {
   std::string model;
 };
 
-class TiffRootIFD final : public TiffIFD {
+class RAWSPEED_API TiffRootIFD final : public TiffIFD {
   void anchor() const override;
 
 public:

@@ -23,6 +23,7 @@
 #pragma once
 
 #include "rawspeedconfig.h"
+#include "SymbolDef.h"
 #include "adt/NORangesSet.h"
 #include "tiff/CiffEntry.h"
 #include "tiff/CiffTag.h"
@@ -39,7 +40,7 @@ class ByteStream;
 class CiffEntry;
 template <typename T> class NORangesSet;
 
-class CiffIFD final {
+class RAWSPEED_API CiffIFD final {
   CiffIFD* const parent;
 
   std::vector<std::unique_ptr<const CiffIFD>> mSubIFD;

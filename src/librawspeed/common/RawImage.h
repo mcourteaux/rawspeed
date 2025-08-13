@@ -21,6 +21,7 @@
 #pragma once
 
 #include "rawspeedconfig.h"
+#include "SymbolDef.h"
 #include "ThreadSafetyAnalysis.h"
 #include "adt/AlignedAllocator.h"
 #include "adt/Array2DRef.h"
@@ -53,7 +54,7 @@ class RawImageData;
 
 enum class RawImageType : uint8_t { UINT16, F32 };
 
-class RawImageWorker final {
+class RAWSPEED_API RawImageWorker final {
 public:
   enum class RawImageWorkerTask : uint16_t {
     SCALE_VALUES = 1,
@@ -75,7 +76,7 @@ public:
                  int end_y) noexcept;
 };
 
-class ImageMetaData final {
+class RAWSPEED_API ImageMetaData final {
 public:
   // Aspect ratio of the pixels, usually 1 but some cameras need scaling
   // <1 means the image needs to be stretched vertically, (0.5 means 2x)
@@ -108,7 +109,7 @@ public:
   int isoSpeed = 0;
 };
 
-class RawImageData : public ErrorLog {
+class RAWSPEED_API RawImageData : public ErrorLog {
   virtual void anchor() const;
 
   friend class RawImageWorker;
@@ -206,7 +207,7 @@ protected:
   std::unique_ptr<TableLookUp> table;
 };
 
-class RawImageDataU16 final : public RawImageData {
+class RAWSPEED_API RawImageDataU16 final : public RawImageData {
 public:
   RawImageDataU16();
   explicit RawImageDataU16(const iPoint2D& dim_, uint32_t cpp_ = 1);
@@ -227,7 +228,7 @@ private:
   friend class RawImage;
 };
 
-class RawImageDataFloat final : public RawImageData {
+class RAWSPEED_API RawImageDataFloat final : public RawImageData {
 public:
   RawImageDataFloat();
   explicit RawImageDataFloat(const iPoint2D& dim_, uint32_t cpp_ = 1);
@@ -244,7 +245,7 @@ private:
   friend class RawImage;
 };
 
-class RawImage final {
+class RAWSPEED_API RawImage final {
 public:
   static RawImage create(RawImageType type = RawImageType::UINT16);
   static RawImage create(const iPoint2D& dim,

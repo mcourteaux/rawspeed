@@ -24,6 +24,7 @@
 // IWYU pragma: begin_exports
 
 #include "rawspeedconfig.h"
+#include "SymbolDef.h"
 #include "adt/Mutex.h"
 #include "adt/Point.h"
 #include "common/Common.h"

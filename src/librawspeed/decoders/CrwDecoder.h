@@ -21,6 +21,7 @@
 
 #pragma once
 
+#include "SymbolDef.h"
 #include "common/RawImage.h"
 #include "decoders/RawDecoder.h"
 #include "tiff/CiffIFD.h"
@@ -32,7 +33,7 @@ namespace rawspeed {
 class Buffer;
 class CameraMetaData;
 
-class CrwDecoder final : public RawDecoder {
+class RAWSPEED_API CrwDecoder final : public RawDecoder {
   std::unique_ptr<const CiffIFD> mRootIFD;
 
 public:
