@@ -29,7 +29,6 @@
 #include <cstdint>
 #include <functional>
 #include <map>
-#include <sstream>
 #include <string>
 #include <utility>
 #include <vector>
@@ -43,6 +42,8 @@ class xml_node;
 #endif
 
 namespace rawspeed {
+
+template <typename T> inline void hint_type_not_parsed(T& val);
 
 class Hints final {
   std::map<std::string, std::string, std::less<>> data;
@@ -60,17 +61,31 @@ public:
   [[nodiscard]] T get(const std::string& key, T defaultValue) const {
     if (auto hint = data.find(key);
         hint != data.end() && !hint->second.empty()) {
-      std::istringstream iss(hint->second);
-      iss >> defaultValue;
+      if constexpr (std::is_same_v<unsigned long long, T>) {
+        defaultValue = std::stoull(hint->second);
+      } else if constexpr (std::is_same_v<long long, T>) {
+        defaultValue = std::stoll(hint->second);
+      } else if constexpr (std::is_same_v<unsigned long, T>) {
+        defaultValue = std::stoul(hint->second);
+      } else if constexpr (std::is_same_v<long, T>) {
+        defaultValue = std::stol(hint->second);
+      } else if constexpr (std::is_same_v<unsigned int, T>) {
+        defaultValue = (T) std::stoul(hint->second);
+      } else if constexpr (std::is_same_v<int, T>) {
+        defaultValue = std::stoi(hint->second);
+      } else if constexpr (std::is_same_v<float, T>) {
+        defaultValue = std::stof(hint->second);
+      } else if constexpr (std::is_same_v<double, T>) {
+        defaultValue = std::stod(hint->second);
+      } else if constexpr (std::is_same_v<bool, T>) {
+        defaultValue = hint->second == "true";
+      } else if constexpr (std::is_same_v<std::string, T>) {
+        defaultValue = hint->second;
+      } else {
+        hint_type_not_parsed<T>(defaultValue);
+      }
     }
     return defaultValue;
-  }
-
-  [[nodiscard]] bool get(const std::string& key, bool defaultValue) const {
-    auto hint = data.find(key);
-    if (hint == data.end())
-      return defaultValue;
-    return "true" == hint->second;
   }
 };
 

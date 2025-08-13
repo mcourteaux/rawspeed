@@ -138,13 +138,12 @@ RawImage SrwDecoder::decodeRawInternal() {
 std::string SrwDecoder::getMode() const {
   std::vector<const TiffIFD*> data =
       mRootIFD->getIFDsWithTag(TiffTag::CFAPATTERN);
-  std::ostringstream mode;
+  std::string mode;
   if (!data.empty() && data[0]->hasEntryRecursive(TiffTag::BITSPERSAMPLE)) {
-    mode << data[0]->getEntryRecursive(TiffTag::BITSPERSAMPLE)->getU32()
-         << "bit";
-    return mode.str();
+    mode += std::to_string(data[0]->getEntryRecursive(TiffTag::BITSPERSAMPLE)->getU32());
+    mode += "bit";
   }
-  return "";
+  return mode;
 }
 
 void SrwDecoder::checkSupportInternal(const CameraMetaData* meta) {
