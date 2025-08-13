@@ -23,6 +23,7 @@
 #pragma once
 
 #include "rawspeedconfig.h"
+#include "SymbolDef.h"
 #include "adt/NotARational.h"
 #include "io/ByteStream.h"
 #include "tiff/TiffTag.h"
@@ -59,7 +60,7 @@ enum class TiffDataType : uint8_t {
   OFFSET = 13,    /* 32-bit unsigned offset used for IFD and other offsets */
 };
 
-class TiffEntry {
+class RAWSPEED_API TiffEntry {
   TiffIFD* parent;
   ByteStream data;
 

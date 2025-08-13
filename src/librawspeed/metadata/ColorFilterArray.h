@@ -21,6 +21,7 @@
 #pragma once
 
 #include "rawspeedconfig.h"
+#include "SymbolDef.h"
 #include "adt/Point.h"
 #include <cstdint>
 #include <string>
@@ -43,7 +44,7 @@ enum class CFAColor : uint8_t {
 
 };
 
-class ColorFilterArray final {
+class RAWSPEED_API ColorFilterArray final {
   std::vector<CFAColor> cfa;
   iPoint2D size;
 

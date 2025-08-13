@@ -21,6 +21,7 @@
 #pragma once
 
 #include "rawspeedconfig.h"
+#include "SymbolDef.h"
 #include "metadata/Camera.h"
 #include <cstdint>
 #include <map>
@@ -32,7 +33,7 @@
 namespace rawspeed {
 class Camera;
 
-struct CameraId final {
+struct RAWSPEED_API CameraId final {
   std::string make;
   std::string model;
   std::string mode;
@@ -44,7 +45,7 @@ struct CameraId final {
 };
 
 // NOTE: *NOT* `final`, could be derived from by downstream.
-class CameraMetaData {
+class RAWSPEED_API CameraMetaData final {
 public:
   CameraMetaData() = default;
 
