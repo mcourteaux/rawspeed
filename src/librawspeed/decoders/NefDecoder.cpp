@@ -54,9 +54,7 @@
 #include <vector>
 
 using std::vector;
-
 using std::min;
-using std::ostringstream;
 
 namespace rawspeed {
 
@@ -416,31 +414,31 @@ int NefDecoder::getBitPerSample() const {
 }
 
 std::string NefDecoder::getMode() const {
-  ostringstream mode;
+  std::string mode;
   const auto* raw = getIFDWithLargestImage(TiffTag::CFAPATTERN);
   int compression = raw->getEntry(TiffTag::COMPRESSION)->getU32();
   uint32_t bitPerPixel = raw->getEntry(TiffTag::BITSPERSAMPLE)->getU32();
 
   if (NEFIsUncompressedRGB(raw))
-    mode << "sNEF-uncompressed";
+    mode = "sNEF-uncompressed";
   else {
     if (1 == compression || NEFIsUncompressed(raw))
-      mode << bitPerPixel << "bit-uncompressed";
+      mode = std::to_string(bitPerPixel) + "bit-uncompressed";
     else
-      mode << bitPerPixel << "bit-compressed";
+      mode = std::to_string(bitPerPixel) + "bit-compressed";
   }
-  return mode.str();
+  return mode;
 }
 
 std::string NefDecoder::getExtendedMode(const std::string& mode) const {
-  ostringstream extended_mode;
-
   const auto* ifd = mRootIFD->getIFDWithTag(TiffTag::CFAPATTERN);
   uint32_t width = ifd->getEntry(TiffTag::IMAGEWIDTH)->getU32();
   uint32_t height = ifd->getEntry(TiffTag::IMAGELENGTH)->getU32();
 
-  extended_mode << width << "x" << height << "-" << mode;
-  return extended_mode.str();
+  std::string extended_mode = std::to_string(width) + "x" + std::to_string(height);
+  extended_mode += "-";
+  extended_mode += mode;
+  return extended_mode;
 }
 
 // We use this for the D50 and D2X whacky WB "encryption"

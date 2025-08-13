@@ -43,7 +43,7 @@
 #include <cstring>
 #include <istream>
 #include <memory>
-#include <sstream>
+#include <cstdio>
 #include <string>
 #include <string_view>
 #include <utility>
@@ -172,9 +172,8 @@ void MosDecoder::decodeMetaDataInternal(const CameraMetaData* meta) {
           break;
         std::array<uint32_t, 4> tmp = {{}};
         const std::string tmpString(bs.peekString());
-        std::istringstream iss(tmpString);
-        iss >> tmp[0] >> tmp[1] >> tmp[2] >> tmp[3];
-        if (!iss.fail() && tmp[0] > 0 && tmp[1] > 0 && tmp[2] > 0 &&
+        int parsed = std::sscanf(tmpString.c_str(), "%d %d %d %d", &tmp[0], &tmp[1], &tmp[2], &tmp[3]);
+        if (parsed == 4 && tmp[0] > 0 && tmp[1] > 0 && tmp[2] > 0 &&
             tmp[3] > 0) {
           std::array<float, 4> wbCoeffs = {};
           wbCoeffs[0] =
