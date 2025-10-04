@@ -125,16 +125,13 @@ public:
 
   [[nodiscard]] rawspeed::RawImageType getDataType() const { return dataType; }
 
-  [[nodiscard]] Array2DRef<uint16_t> getU16DataAsUncroppedArray2DRef() noexcept;
-  [[nodiscard]] CroppedArray2DRef<uint16_t>
-  getU16DataAsCroppedArray2DRef() noexcept;
-  [[nodiscard]] Array2DRef<float> getF32DataAsUncroppedArray2DRef() noexcept;
-  [[nodiscard]] CroppedArray2DRef<float>
-  getF32DataAsCroppedArray2DRef() noexcept;
+  [[nodiscard]] inline Array2DRef<uint16_t> getU16DataAsUncroppedArray2DRef() noexcept;
+  [[nodiscard]] inline CroppedArray2DRef<uint16_t> getU16DataAsCroppedArray2DRef() noexcept;
+  [[nodiscard]] inline Array2DRef<float> getF32DataAsUncroppedArray2DRef() noexcept;
+  [[nodiscard]] inline CroppedArray2DRef<float> getF32DataAsCroppedArray2DRef() noexcept;
 
   // WARNING: this is most certainly not what you want!
-  [[nodiscard]] Array2DRef<std::byte>
-  getByteDataAsUncroppedArray2DRef() noexcept;
+  [[nodiscard]] inline Array2DRef<std::byte> getByteDataAsUncroppedArray2DRef() noexcept;
 
   void subFrame(iRectangle2D cropped);
   void clearArea(iRectangle2D area);
@@ -214,7 +211,7 @@ public:
 
   void scaleBlackWhite() override;
   void calculateBlackAreas() override;
-  void setWithLookUp(uint16_t value, std::byte* dst, uint32_t* random) override;
+  inline void setWithLookUp(uint16_t value, std::byte* dst, uint32_t* random) override;
 
 private:
   void scaleValues_plain(int start_y, int end_y);
@@ -235,7 +232,7 @@ public:
 
   void scaleBlackWhite() override;
   void calculateBlackAreas() override;
-  void setWithLookUp(uint16_t value, std::byte* dst, uint32_t* random) override;
+  inline void setWithLookUp(uint16_t value, std::byte* dst, uint32_t* random) override;
 
 private:
   void scaleValues(int start_y, int end_y) override;
@@ -247,10 +244,10 @@ private:
 
 class RAWSPEED_API RawImage final {
 public:
-  static RawImage create(RawImageType type = RawImageType::UINT16);
-  static RawImage create(const iPoint2D& dim,
-                         RawImageType type = RawImageType::UINT16,
-                         uint32_t componentsPerPixel = 1);
+  static inline RawImage create(RawImageType type = RawImageType::UINT16);
+  static inline RawImage create(const iPoint2D& dim,
+                                RawImageType type = RawImageType::UINT16,
+                                uint32_t componentsPerPixel = 1);
   RawImageData* RAWSPEED_READONLY operator->() const { return &*p_; }
   RawImageData& RAWSPEED_READONLY operator*() const { return *p_; }
 
