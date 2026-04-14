@@ -348,12 +348,19 @@ inline void RawImageDataU16::setWithLookUp(uint16_t value, std::byte* dst,
     return;
   }
   if (table->dither) {
+#if 1
+    uint32_t *u32_table = reinterpret_cast<uint32_t*>(table->tables.data());
+    uint32_t data = u32_table[value];
+    uint32_t delta = data >> 16;
+    uint32_t base = data & 0xffff;
+#else
     uint32_t base = table->tables[(2 * value) + 0];
     uint32_t delta = table->tables[(2 * value) + 1];
+#endif
     uint32_t r = *random;
 
     uint32_t pix = base + ((delta * (r & 2047) + 1024) >> 12);
-    *random = 15700 * (r & 65535) + (r >> 16);
+    *random = (15700 * (r & 65535)) + (r >> 16);
     *dest = implicit_cast<uint16_t>(pix);
     return;
   }
