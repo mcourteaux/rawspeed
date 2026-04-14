@@ -509,7 +509,6 @@ NikonDecompressor::NikonDecompressor(RawImage raw, ByteStream metadata,
   pUp[1][1] = metadata.getU16();
 
   curve = createCurve(metadata, bitsPS, v0, v1, &split);
-
   // If the 'split' happens outside of the image, it does not actually happen.
   if (split >= static_cast<unsigned>(mRaw->dim.y))
     split = 0;
@@ -542,6 +541,18 @@ void NikonDecompressor::decompress(BitStreamerMSB& bits, int start_y,
 
 void NikonDecompressor::decompress(Array1DRef<const uint8_t> input,
                                    bool uncorrectedRawValues) {
+  {
+    bool identity = true;
+    for (size_t i = 0; i < curve.size(); ++i) {
+      if (i != curve[i]) {
+        identity = false;
+        break;
+      }
+    }
+    if (identity) {
+      uncorrectedRawValues = true;
+    }
+  }
   RawImageCurveGuard curveHandler(&mRaw, curve, uncorrectedRawValues);
 
   BitStreamerMSB bits(input);
