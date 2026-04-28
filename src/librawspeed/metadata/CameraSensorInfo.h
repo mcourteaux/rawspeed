@@ -21,11 +21,12 @@
 #pragma once
 
 #include "rawspeedconfig.h"
+#include "SymbolDef.h"
 #include <vector>
 
 namespace rawspeed {
 
-class CameraSensorInfo final {
+class RAWSPEED_API CameraSensorInfo final {
 public:
   CameraSensorInfo(int black_level, int white_level, int min_iso, int max_iso,
                    std::vector<int> black_separate);

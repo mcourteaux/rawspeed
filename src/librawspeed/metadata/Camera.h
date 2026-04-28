@@ -89,7 +89,7 @@ public:
   }
 };
 
-class Camera final {
+class RAWSPEED_API Camera final {
 public:
   enum class SupportStatus : uint8_t {
     SupportedNoSamples, // Tentatively supported, no RPU samples.

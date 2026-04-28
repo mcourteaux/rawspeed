@@ -415,7 +415,7 @@ void Camera::parseCameraChild(const xml_node& cur) {
 }
 #endif
 
-const CameraSensorInfo* Camera::getSensorInfo(int iso) const {
+RAWSPEED_API const CameraSensorInfo* Camera::getSensorInfo(int iso) const {
   if (sensorInfo.empty())
     return nullptr;
 
